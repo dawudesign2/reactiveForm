@@ -1,0 +1,51 @@
+<form [formGroup]="searchMovie" (ngSubmit)="onSubmit()">
+
+    <p>Form Status: {{ searchMovie.status }}</p>
+    <p>Form Value: {{ searchMovie.value | json}}</p>
+    <div formGroupName="search">
+        <div>
+            <label for="identifiant">Identifiant: </label>
+            <input id="identifiant" type="text" formControlName="identifiant">
+            <div *ngIf="submitted && searchMovie.controls['search'].controls.identifiant.errors">
+                <span>Identifiant is required</span>
+            </div>
+        </div>
+        <div>
+            <label for="title">Title: </label>
+            <input id="title" type="text" formControlName="title">
+            <div *ngIf="submitted && searchMovie.controls['search'].controls.title.errors">
+                <span>Title is required</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <label for="type">Type: </label>
+        <select id="type" formControlName="type">
+            <option value="movie">Film</option>
+            <option value="series">Serie</option>
+            <option value="episode">Episode</option>
+        </select>
+    </div>
+    <div>
+        <label for="year">Année de sortie: </label>
+        <input id="year" type="number" formControlName="year">
+        <div *ngIf="submitted && searchMovie.controls.year.errors != null">
+            <span>Année de sortie entre
+            {{ searchMovie.controls.year.errors['rangeDate']['min'] | json }}
+            et
+            {{ searchMovie.controls.year.errors['rangeDate']['max'] | json }}
+            </span>
+        </div>
+    </div>
+    <div *ngIf="">
+        <label for="fiche">Fiche :</label>
+        <select id="fiche" formControlName="fiche">
+            <option value="complete">Complète</option>
+            <option value="courte">Courte</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Rechercher</button>
+        <button type="button" (click)="patchFiche()">select courte</button>
+    </div>
+</form>
